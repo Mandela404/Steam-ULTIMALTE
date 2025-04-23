@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Gerador de Chaves Steam Ultimate</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link rel="stylesheet" href="./style.css">
+</head>
+
+<body style="margin:0;background:var(--background);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,sans-serif">
+<div style="max-width:1200px;margin:0 auto;background:var(--dark);padding:30px;border-radius:16px;box-shadow:0 10px 20px rgba(0,0,0,0.3)">
+
+  <!-- Cabeçalho -->
+  <header style="margin-bottom:30px;display:flex;justify-content:space-between;align-items:center">
+    <h1 style="color:var(--primary);margin:0;display:flex;align-items:center;gap:15px">
+      <i class="fab fa-steam fa-2x"></i>
+      <span>Gerador de Chaves Steam ULTIMATE</span>
+    </h1>
+    <button onclick="toggleAdvanced()" id="advancedBtn" style="background:var(--secondary);color:#fff;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;z-index:100">
+      <i class="fas fa-cogs"></i> Modo Avançado
+    </button>
+  </header>
+
+  <!-- Controles Principais -->
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:30px;margin-bottom:30px">
+    
+    <!-- Coluna Esquerda -->
+    <div>
+      <div style="background:var(--darker);padding:20px;border-radius:12px;margin-bottom:20px">
+        <h3 style="color:var(--secondary);margin-top:0"><i class="fas fa-hashtag"></i> Quantidade</h3>
+        <div style="display:flex;gap:15px;align-items:center">
+          <input type="range" id="qtdRange" min="1" max="100000" value="10" 
+                 style="flex:1;accent-color:var(--primary)" 
+                 oninput="document.getElementById('qtdValue').textContent = this.value">
+          <span id="qtdValue" style="background:var(--darker);color:#fff;padding:8px 15px;border-radius:8px;min-width:50px;text-align:center">10</span>
+        </div>
+      </div>
+
+      <div style="background:var(--darker);padding:20px;border-radius:12px;margin-bottom:20px">
+        <h3 style="color:var(--secondary);margin-top:0"><i class="fas fa-eye"></i> Pré-visualização</h3>
+        <div id="keyPreview" style="background:var(--dark);padding:15px;border-radius:8px;color:var(--primary);font-family:monospace;text-align:center;letter-spacing:2px">
+          XXXXX-XXXXX-XXXXX
+        </div>
+      </div>
+    </div>
+
+    <!-- Coluna Direita -->
+    <div>
+      <button onclick="generateKeys()" id="generateBtn" 
+              style="width:100%;padding:20px;background:linear-gradient(135deg,var(--primary),#0096c7);border:none;
+                     color:white;border-radius:12px;cursor:pointer;font-size:1.1em;margin-bottom:20px;
+                     animation:pulse 2s infinite;transition:0.3s">
+        <i class="fas fa-key"></i> GERAR CHAVES
+      </button>
+
+      <div style="background:var(--darker);padding:20px;border-radius:12px">
+        <h3 style="color:var(--secondary);margin-top:0"><i class="fas fa-file-export"></i> Exportar</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <button onclick="copyJSON()" style="background:var(--primary);color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer">
+            <i class="fas fa-copy"></i> Copiar
+          </button>
+          <button onclick="downloadJSON()" style="background:var(--secondary);color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer">
+            <i class="fas fa-download"></i> Baixar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seção Avançada -->
+  <div id="advancedSection" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:30px">
+      
+      <!-- Formato -->
+      <div class="advanced-option-group">
+        <h3><i class="fas fa-shapes"></i> Formato</h3>
+        <div class="config-item">
+          <div class="custom-select">
+            <select id="formatSelect">
+              <option value="XXXXX-XXXXX-XXXXX">Padrão (5-5-5)</option>
+              <option value="XXXX-XXXX-XXXX-XXXX">Estendido (4-4-4-4)</option>
+              <option value="XXX-XXXXXXX-XXXXXXX">Retail (3-7-7)</option>
+              <option value="XXXXXXX-XXXXXXX">Compacto (7-7)</option>
+              <option value="XXXXXXXX-XXXXXXXX">Ultra (8-8)</option>
+              <option value="custom">Personalizado</option>
+            </select>
+          </div>
+          <div id="customFormat" style="display:none;margin-top:10px">
+            <input type="text" id="customFormatInput" placeholder="Ex: XXXX-XXXX-XXXX" 
+                   style="width:100%;padding:10px;background:var(--dark);border:2px solid var(--primary);color:white;border-radius:8px">
+          </div>
+        </div>
+      </div>
+
+      <!-- Segurança -->
+      <div class="advanced-option-group">
+        <h3><i class="fas fa-shield-alt"></i> Segurança</h3>
+        <div class="config-item">
+          <label class="custom-checkbox">
+            <input type="checkbox" id="checksumCheck">
+            <span class="checkmark"></span>
+            Checksum de validação
+          </label>
+          <label class="custom-checkbox">
+            <input type="checkbox" id="uniqueCheck" checked>
+            <span class="checkmark"></span>
+            Chaves únicas
+          </label>
+          <div class="custom-select" style="margin-top:15px">
+            <select id="securityLevel">
+              <option value="low">Baixa segurança</option>
+              <option value="medium">Média segurança</option>
+              <option value="high">Alta segurança</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opções -->
+      <div class="advanced-option-group">
+        <h3><i class="fas fa-wrench"></i> Opções <span style="color: red">{EM MANUNTENÇÃO}</span></h3>
+        <div class="config-item">
+          <label class="custom-checkbox">
+            <input type="checkbox" id="hyphenCheck" checked>
+            <span class="checkmark"></span>
+            Usar hífens
+          </label>
+          <label class="custom-checkbox">
+            <input type="checkbox" id="upperCheck" checked>
+            <span class="checkmark"></span>
+            Letras maiúsculas
+          </label>
+          <label class="custom-checkbox">
+            <input type="checkbox" id="noAmbiguousCheck">
+            <span class="checkmark"></span>
+            Evitar caracteres ambíguos
+          </label>
+          <label class="custom-checkbox">
+  <input type="checkbox" id="mixedCaseCheck" checked>
+  <span class="checkmark"></span>
+  Misturar maiúsculas/minúsculas
+		</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resultados -->
+  <div style="background:var(--darker);padding:20px;border-radius:12px;margin-top:20px">
+    <h3 style="color:var(--secondary);margin-top:0"><i class="fas fa-keyboard"></i> Chaves Geradas</h3>
+    <div id="keysContainer" style="max-height:400px;overflow-y:auto" class="custom-scroll">
+      <div id="keysList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:15px"></div>
+    </div>
+  </div>
+
+  <!-- JSON Output -->
+  <div style="background:var(--darker);padding:20px;border-radius:12px;margin-top:20px">
+    <pre id="jsonOutput" style="background:var(--dark);padding:15px;border-radius:8px;color:#fff;max-height:200px;overflow:auto" class="custom-scroll">{"keys":[]}</pre>
+  </div>
+</div>
+  
+<div style="position:relative;margin-bottom:30px;margin-top: 30px;">
+  <div class="warning-box">
+    <i class="fas fa-exclamation-triangle"></i>
+    <div>
+      <strong>AVISO IMPORTANTE:</strong> Esta ferramenta é apenas para fins de teste e demonstração. 
+      As chaves geradas possuem uma chance extremamente baixa de funcionar. Não nos responsabilizamos 
+      por qualquer uso indevido desta ferramenta.
+    </div>
+  </div>
+</div>
+
+<script src="./app.js"></script>
+</body>
+</html>
