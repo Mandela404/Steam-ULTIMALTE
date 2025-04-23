@@ -29,74 +29,78 @@ Algumas opções estão temporariamente indisponíveis devido a atualizações:
 - Configuração de hífens
 - Controle de maiúsculas/minúsculas
 - Filtro de caracteres ambíguos
-Tecnologias Utilizadas 🛠️
-Frontend:
+## Tecnologias Utilizadas 🛠️
+# Steam Key Generator
 
-HTML5 Semântico
+Este projeto é um gerador simples de chaves no estilo Steam, desenvolvido com tecnologias modernas de frontend.
 
-CSS3 com Variáveis Customizadas
+---
 
-JavaScript ES6+
+## Frontend
 
-Bibliotecas:
+- **HTML5 Semântico**
+- **CSS3** com Variáveis Customizadas
+- **JavaScript ES6+**
 
-Font Awesome 6.4.0 (Ícones)
+## Bibliotecas
 
-Web APIs (Clipboard, Blob)
+- **Font Awesome 6.4.0** (Ícones)
+- **Web APIs** (Clipboard, Blob)
 
-Como Usar 🚀
-Pré-requisitos:
+## Como Usar 🚀
 
-Navegador moderno (Chrome 90+, Firefox 88+)
+### Pré-requisitos
 
-Conexão com internet (para carregar ícones)
+- Navegador moderno (Chrome 90+, Firefox 88+)
+- Conexão com internet (para carregar ícones)
 
-Execução Local:
+### Execução Local
 
-bash
+```bash
 git clone https://github.com/seu-usuario/steam-key-generator.git
 cd steam-key-generator
 # Basta abrir o index.html em seu navegador
-Fluxo de Trabalho:
+```
 
-Ajuste a quantidade desejada usando o slider
+## Fluxo de Trabalho
 
-Selecione o formato das chaves
+1. Ajuste a quantidade desejada usando o slider
+2. Selecione o formato das chaves
+3. Configure as opções de segurança
+4. Clique em **GERAR CHAVES**
+5. Exporte ou copie os resultados
 
-Configure as opções de segurança
+## Estrutura de Arquivos 📂
 
-Clique em GERAR CHAVES
-
-Exporte ou copie os resultados
-
-Estrutura de Arquivos 📂
+```bash
 tree
 .
 ├── index.html          - Estrutura principal
 ├── style.css           - Estilos e tema visual
 ├── app.js              - Lógica principal do gerador
 └── README.md           - Documentação do projeto
-Personalização Avançada ⚙️
+```
+
+## Personalização Avançada ⚙️
+
 Acesse o Modo Avançado para:
 
-Definir formato personalizado
+- Definir formato personalizado
+- Configurar complexidade de segurança
+- Habilitar validação por checksum
+- Controlar mix de caracteres
 
-Configurar complexidade de segurança
+### Exemplo de formato customizado
 
-Habilitar validação por checksum
-
-Controlar mix de caracteres
-
-Exemplo de formato customizado:
-
-javascript
+```javascript
 // Padrão: XXX-XXXX-XXXXX
 document.getElementById('customFormatInput').value = 'XXX-XXXX-XXXXX';
-Limitações Conhecidas ⚠️
-Geração limitada a 100,000 chaves por vez
+```
 
-Performance pode degradar com >10,000 chaves
+## Limitações Conhecidas ⚠️
 
-Checksum não segue padrão Steam oficial
+- Geração limitada a **100.000** chaves por vez
+- Performance pode degradar com **>10.000** chaves
+- Checksum não segue padrão Steam oficial
+- Não inclui validação de servidor
 
-Não inclui validação de servidor
