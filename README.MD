@@ -2,7 +2,7 @@
 
 Um gerador de chaves Steam com interface moderna, personalização avançada e recursos de exportação. Desenvolvido para fins educacionais e de teste.
 
-![Preview](https://via.placeholder.com/800x600.png?text=Steam+Key+Generator+Preview)
+![Preview](./img/thumbnail.png)
 
 > **Aviso Importante**  
 > As chaves geradas possuem **chance extremamente baixa de funcionar**. Este projeto é apenas para demonstração técnica. Não nos responsabilizamos por qualquer uso indevido.
